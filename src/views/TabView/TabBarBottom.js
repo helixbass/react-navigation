@@ -51,6 +51,7 @@ type Props = {
   tabStyle?: ViewStyleProp,
   showIcon?: boolean,
   isLandscape: boolean,
+  renderBefore: () => React.Node,
 };
 
 const majorVersion = parseInt(Platform.Version, 10);
@@ -171,6 +172,7 @@ class TabBarBottom extends React.PureComponent<Props> {
       animateStyle,
       tabStyle,
       isLandscape,
+      renderBefore,
     } = this.props;
     const { routes } = navigation.state;
     const previousScene = routes[navigation.state.index];
@@ -191,6 +193,7 @@ class TabBarBottom extends React.PureComponent<Props> {
           style={tabBarStyle}
           forceInset={{ bottom: 'always', top: 'never' }}
         >
+          {renderBefore && renderBefore()}
           {routes.map((route: NavigationRoute, index: number) => {
             const focused = index === navigation.state.index;
             const scene = { route, index, focused };
